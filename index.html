@@ -215,7 +215,7 @@
     input,select,textarea{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:13px 14px;border-radius:7px;min-height:50px}
     textarea{min-height:112px;resize:vertical}
     input:focus,select:focus,textarea:focus{outline:3px solid color-mix(in srgb,var(--green) 26%,transparent);border-color:var(--green)}
-    .form-actions{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:26px;flex-wrap:wrap}
+    .form-success{padding:28px 0}.form-success h3{margin:0 0 8px;font-size:1.35rem}.form-success p{margin:0;opacity:.85}.form-error{color:#b42318;margin-top:12px}.form-actions{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:26px;flex-wrap:wrap}
     .form-next,.form-back{border:0;cursor:pointer}
     .form-note{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem}
     .status-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);flex:0 0 auto;margin-top:5px}
@@ -406,7 +406,7 @@
         <div class="field"><label>Phone</label><input aria-label="Phone" name="phone" type="tel" autocomplete="tel" required><div class="field-error">Please add your phone number.</div></div>
         <div class="field"><label>Email</label><input aria-label="Email" name="email" type="email" autocomplete="email"></div>
         <div class="field"><label>City / area</label><input aria-label="City / area" name="city_area" required><div class="field-error">Please add your city or area.</div></div>
-      </div><div class="form-actions"><span></span><button class="button form-next" type="button">Continue <span class="arrow">→</span></button></div></div><div class="form-step"><div class="fields"><div class="field"><label>Favorite food</label><input aria-label="Favorite food" name="favorite_food"></div><div class="field"><label>What would make you use Deliverado?</label><input aria-label="What would make you use Deliverado?" name="why_use"></div></div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button" type="button" disabled>Submit</button></div></div></form></section>
+      </div><div class="form-actions"><span></span><button class="button form-next" type="button">Continue <span class="arrow">→</span></button></div></div><div class="form-step"><div class="fields"><div class="field"><label>Favorite food</label><input aria-label="Favorite food" name="favorite_food"></div><div class="field"><label>What would make you use Deliverado?</label><input aria-label="What would make you use Deliverado?" name="why_use"></div></div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button form-submit" type="button">Submit</button></div></div></form></section>
 
       <section class="form-panel" data-role-panel="restaurants" aria-labelledby="restaurants-title"><div class="form-intro"><div class="eyebrow">Restaurants</div><h2 id="restaurants-title">Become a founding restaurant partner.</h2><p>Help shape the delivery network and tell us how your business currently handles orders.</p></div><form class="form-shell" novalidate data-form><div class="progress"><span class="active"></span><span></span></div><div class="form-step active"><div class="fields">
         <div class="field"><label>Business name</label><input aria-label="Business name" name="business_name" required><div class="field-error">Please add the business name.</div></div>
@@ -420,7 +420,7 @@
         <div class="field"><label>Current delivery method</label><input aria-label="Current delivery method" name="current_delivery"></div>
         <div class="field"><label>Approx. orders / day</label><input aria-label="Approx. orders / day" name="orders_per_day" inputmode="numeric"></div>
         <div class="field"><label>Delivery / Marketplace / Both</label><select aria-label="Delivery / Marketplace / Both" name="model"><option value="">Select</option><option>Delivery</option><option>Marketplace</option><option>Both</option></select></div>
-      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button" type="button" disabled>Submit</button></div></div></form></section>
+      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button form-submit" type="button">Submit</button></div></div></form></section>
 
       <section class="form-panel" data-role-panel="riders" aria-labelledby="riders-title"><div class="form-intro"><div class="eyebrow">Riders</div><h2 id="riders-title">Be among the first riders to receive launch updates.</h2><p>Tell us where and how you would prefer to operate as the rider network takes shape.</p></div><form class="form-shell" novalidate data-form><div class="progress"><span class="active"></span><span></span></div><div class="form-step active"><div class="fields">
         <div class="field"><label>Name</label><input aria-label="Name" name="name" autocomplete="name" required><div class="field-error">Please add your name.</div></div>
@@ -432,7 +432,7 @@
         <div class="field"><label>Years of riding</label><input aria-label="Years of riding" name="years_riding" inputmode="numeric"></div>
         <div class="field"><label>Delivery experience</label><input aria-label="Delivery experience" name="delivery_experience"></div>
         <div class="field"><label>Preferred operating area</label><input aria-label="Preferred operating area" name="preferred_area"></div>
-      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button" type="button" disabled>Submit</button></div></div></form></section>
+      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button form-submit" type="button">Submit</button></div></div></form></section>
 
       <section class="form-panel" data-role-panel="partners" aria-labelledby="partners-title"><div class="form-intro"><div class="eyebrow">Partners</div><h2 id="partners-title">Help build the network.</h2><p>Tell us how you are interested in helping build the infrastructure behind movement.</p></div><form class="form-shell" novalidate data-form><div class="progress"><span class="active"></span><span></span></div><div class="form-step active"><div class="fields">
         <div class="field"><label>Name</label><input aria-label="Name" name="name" autocomplete="name" required><div class="field-error">Please add your name.</div></div>
@@ -442,7 +442,7 @@
         <div class="field"><label>Partner / investor type</label><input aria-label="Partner / investor type" name="partner_type"></div>
         <div class="field"><label>Investment interests</label><input aria-label="Investment interests" name="investment_interests"></div>
         <div class="field full"><label>Message</label><textarea aria-label="Message" name="message"></textarea></div>
-      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button" type="button" disabled>Submit</button></div></div></form></section>
+      </div><div class="form-actions"><button class="button secondary form-back" type="button">Back</button><button class="button form-submit" type="button">Submit</button></div></div></form></section>
     </div></section>
   </article>
 </main>
@@ -515,6 +515,28 @@
     });
     form.querySelector('.form-back').addEventListener('click',()=>show(0));
     form.querySelectorAll('input').forEach(input=>input.addEventListener('input',()=>input.closest('.field')?.classList.remove('invalid')));
+    const submitBtn=form.querySelector('.form-submit');
+    const panel=form.closest('[data-role-panel]');
+    const role=panel?panel.dataset.rolePanel:'general';
+    submitBtn.addEventListener('click',()=>{
+      submitBtn.disabled=true;
+      submitBtn.textContent='Sending...';
+      const data=new FormData(form);
+      data.append('role',role);
+      fetch('https://formspree.io/f/mzezrroo',{method:'POST',body:data,headers:{'Accept':'application/json'}})
+        .then(res=>{if(!res.ok)throw new Error('send failed');
+          form.querySelectorAll('.form-step,.progress').forEach(el=>el.style.display='none');
+          const done=document.createElement('div');
+          done.className='form-success';
+          done.innerHTML='<h3>Thank you.</h3><p>Your details are in. We will be in touch as the network grows.</p>';
+          form.appendChild(done);})
+        .catch(()=>{
+          submitBtn.disabled=false;
+          submitBtn.textContent='Submit';
+          let err=form.querySelector('.form-error');
+          if(!err){err=document.createElement('p');err.className='form-error';form.appendChild(err);}
+          err.textContent='Something went wrong sending that. Please try again.';});
+    });
   });
 
   render();
