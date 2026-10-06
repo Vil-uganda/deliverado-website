@@ -499,7 +499,7 @@
             <div class="field"><label>Phone number</label><input aria-label="Phone number" name="phone" type="tel" autocomplete="tel" required><div class="field-error">Please add your phone number.</div></div>
             <div class="field"><label>Current location</label><input aria-label="Current location" name="location" placeholder="e.g. Kampala" required><div class="field-error">Please add your current location.</div></div>
             <div class="field"><label>LinkedIn or portfolio link</label><input aria-label="LinkedIn or portfolio link" name="link" type="url" placeholder="https://"></div>
-            <div class="field"><label>CV upload <span class="opt">(PDF, DOC or DOCX, max 10MB)</span></label><input aria-label="CV upload" name="cv" type="file" accept=".pdf,.doc,.docx"><div class="field-error">Please upload a PDF, DOC or DOCX file under 10MB.</div></div>
+            
             <div class="field"><label>Cover note</label><textarea aria-label="Cover note" name="cover_note" rows="4" placeholder="Tell us briefly why this role fits you."></textarea></div>
           </div>
           <div class="form-actions"><span></span><button class="button apply-submit" type="submit">Submit application</button></div>
@@ -699,28 +699,16 @@
       if(field)field.classList.toggle('invalid',!ok);
       if(!ok)valid=false;
     });
-    var fileInput=form.querySelector('input[name="cv"]');
-    var file=fileInput.files[0];
-    if(file){
-      var okType=/\.(pdf|doc|docx)$/i.test(file.name);
-      var okSize=file.size<=10*1024*1024;
-      var field=fileInput.closest('.field');
-      if(field)field.classList.toggle('invalid',!(okType&&okSize));
-      if(!(okType&&okSize))valid=false;
-    }
     if(!valid){var bad=form.querySelector('.invalid input,.invalid textarea');if(bad)bad.focus();return;}
 
     var btn=form.querySelector('.apply-submit');
     btn.disabled=true;var original=btn.textContent;btn.textContent='Sending...';
     var note=document.getElementById('careers-note-text');
 
-    var fd=new FormData(form);
-    fd.append('form_type','job_application');
-    fd.append('role_applied_for',currentRole?currentRole.title:'');
-    fd.append('_subject','New job application: '+(currentRole?currentRole.title:'Deliverado'));
-    if(!file)fd.delete('cv');
+    var payload={form_type:'job_application',role_applied_for:currentRole?currentRole.title:'',_subject:'New job application: '+(currentRole?currentRole.title:'Deliverado')};
+    form.querySelectorAll('input[name],textarea[name]').forEach(function(i){payload[i.name]=i.value.trim();});
 
-    fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:fd}).then(function(res){
+    fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(res){
       if(!res.ok)throw new Error('status '+res.status);
       form.hidden=true;confirmBox.hidden=false;scrollTop();
       document.getElementById('careers-confirm-text').textContent='Thanks for applying for the '+currentRole.title+' role. We will review your application and reply to every applicant.';
