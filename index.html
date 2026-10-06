@@ -264,6 +264,20 @@
       .local-callout{padding:28px;gap:14px}
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.arrow{transition:none}}
+
+    .why-list{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:14px}
+    .why-list li{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);padding:18px 22px;box-shadow:var(--shadow)}
+    .back-link{background:none;border:0;color:var(--green-dark);font-weight:800;cursor:pointer;padding:0;margin:0 0 18px;font-size:.9rem;font-family:inherit}
+    .back-link:hover{text-decoration:underline}
+    .detail-meta{color:var(--muted);font-weight:700;margin:6px 0 18px}
+    .detail-section{margin:26px 0}
+    .detail-section h3{font-size:1.05rem;margin:0 0 10px}
+    .detail-section ul{margin:0;padding-left:20px;display:grid;gap:8px}
+    .detail-equal{color:var(--muted);font-size:.85rem;margin-top:26px}
+    .opt{font-weight:400;color:var(--muted);font-size:.8rem}
+    #careers-role-grid .role-card{display:flex;flex-direction:column}
+    #careers-role-grid .role-card .pitch{flex:1}
+    #careers-role-grid .view-role{align-self:flex-start;margin-top:6px}
   </style>
 </head>
 <body>
@@ -276,6 +290,7 @@
       <a class="nav-link" href="#/roadmap" data-nav="roadmap">Roadmap</a>
       <a class="nav-link" href="#/join" data-nav="join">Join</a>
       <a class="nav-link" href="#/about" data-nav="about">About</a>
+      <a class="nav-link" href="#/careers" data-nav="careers">Careers</a>
       <a class="button small" href="#/join">Join the Waitlist</a>
     </div>
     <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -285,6 +300,7 @@
     <a href="#/roadmap">Roadmap</a>
     <a href="#/join">Join</a>
     <a href="#/about">About</a>
+    <a href="#/careers">Careers</a>
     <a class="button" href="#/join">Join the Waitlist</a>
   </div>
 </nav>
@@ -442,12 +458,66 @@
       
     </div></section>
   </article>
+
+  <article class="route" data-route="careers" hidden>
+    <header class="page-hero"><div class="wrap"><div class="breadcrumb"><a href="#/home">Home</a><span>/</span><span>Careers</span></div><div class="eyebrow">Careers</div><h1>Come build the network behind movement.</h1><p class="lede">Help shape a more connected delivery experience for Kampala. Join a focused team where your work reaches customers, restaurants and riders across the city.</p></div></header>
+
+    <div id="careers-landing">
+      <section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">01 / Why Deliverado</div><h2>Build for the real city.</h2><p class="lede">We are designing a better food delivery experience for Kampala, with practical choices that respect every side of the marketplace.</p></div>
+      <ul class="why-list">
+        <li><b>Fair restaurant partnerships:</b> a model designed to help local restaurants grow and stay in control.</li>
+        <li><b>Dependable operations:</b> clear handoffs and useful visibility for everyone in the delivery.</li>
+        <li><b>Work with visible impact:</b> build practical products that customers, restaurants and riders use every day.</li>
+      </ul></div></section>
+      <section class="section"><div class="wrap"><div class="section-head"><div class="eyebrow">02 / Open Roles</div><h2>4 openings</h2><p class="lede">Find your place on the team. Explore the openings, then choose a role to read the full description.</p></div>
+      <div class="role-grid" id="careers-role-grid"></div></div></section>
+    </div>
+
+    <div id="careers-detail" hidden>
+      <section class="section"><div class="wrap">
+        <p><button class="back-link" type="button" data-careers-back>← Back to open roles</button></p>
+        <div class="eyebrow">Open role</div>
+        <h2 id="cd-title"></h2>
+        <p class="detail-meta" id="cd-meta"></p>
+        <p id="cd-about"></p>
+        <div id="cd-sections"></div>
+        <p class="detail-equal">Deliverado is an equal opportunity employer. We welcome applications from qualified candidates of all backgrounds.</p>
+        <p><button class="button" type="button" id="cd-apply">Apply for this role <span class="arrow">→</span></button></p>
+      </div></section>
+    </div>
+
+    <div id="careers-apply" hidden>
+      <section class="section"><div class="wrap">
+        <p><button class="back-link" type="button" data-careers-back-detail>← Back to role details</button></p>
+        <div class="eyebrow">Apply</div>
+        <h2 id="ca-title">Apply</h2>
+        <p class="detail-meta" id="ca-meta"></p>
+        <form id="careers-form" class="form-shell" novalidate>
+          <div class="fields">
+            <div class="field"><label>Full name</label><input aria-label="Full name" name="name" autocomplete="name" required><div class="field-error">Please add your full name.</div></div>
+            <div class="field"><label>Email address</label><input aria-label="Email address" name="email" type="email" autocomplete="email" required><div class="field-error">Please add a valid email address.</div></div>
+            <div class="field"><label>Phone number</label><input aria-label="Phone number" name="phone" type="tel" autocomplete="tel" required><div class="field-error">Please add your phone number.</div></div>
+            <div class="field"><label>Current location</label><input aria-label="Current location" name="location" placeholder="e.g. Kampala" required><div class="field-error">Please add your current location.</div></div>
+            <div class="field"><label>LinkedIn or portfolio link</label><input aria-label="LinkedIn or portfolio link" name="link" type="url" placeholder="https://"></div>
+            <div class="field"><label>CV upload <span class="opt">(PDF, DOC or DOCX, max 10MB)</span></label><input aria-label="CV upload" name="cv" type="file" accept=".pdf,.doc,.docx"><div class="field-error">Please upload a PDF, DOC or DOCX file under 10MB.</div></div>
+            <div class="field"><label>Cover note</label><textarea aria-label="Cover note" name="cover_note" rows="4" placeholder="Tell us briefly why this role fits you."></textarea></div>
+          </div>
+          <div class="form-actions"><span></span><button class="button apply-submit" type="submit">Submit application</button></div>
+          <div class="form-note"><span class="status-dot"></span><span id="careers-note-text">Applications go directly to our hiring inbox. We reply to every applicant.</span></div>
+        </form>
+        <div id="careers-confirm" hidden>
+          <div class="form-panel"><div class="form-intro"><div class="eyebrow">Application received</div><h2>Thank you. Your application is on its way.</h2><p id="careers-confirm-text">We will review it and reply to every applicant.</p></div>
+          <p><button class="button secondary" type="button" data-careers-back>Back to open roles</button></p></div>
+        </div>
+      </div></section>
+    </div>
+  </article>
 </main>
 
 <footer>
   <div class="wrap footer-grid">
     <div><img class="footer-brand" src="assets/deliverado-logo-display.png" alt="Deliverado"><div class="footer-copy">© 2026 Deliverado. A Vinciane Investments Limited company.</div></div>
-    <div class="footer-links"><a href="#/home">Home</a><a href="#/how-it-works">How It Works</a><a href="#/roadmap">Roadmap</a><a href="#/join">Join</a><a href="#/about">About</a><a href="https://www.linkedin.com/company/deliverado" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://www.facebook.com/profile.php?id=61594284586865" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/deliverado.ug/" target="_blank" rel="noopener noreferrer">Instagram</a></div>
+    <div class="footer-links"><a href="#/home">Home</a><a href="#/how-it-works">How It Works</a><a href="#/roadmap">Roadmap</a><a href="#/join">Join</a><a href="#/about">About</a><a href="#/careers">Careers</a><a href="https://www.linkedin.com/company/deliverado" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://www.facebook.com/profile.php?id=61594284586865" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/deliverado.ug/" target="_blank" rel="noopener noreferrer">Instagram</a></div>
   </div>
 </footer>
 
@@ -462,9 +532,9 @@
   const navLinks=[...document.querySelectorAll('[data-nav]')];
   const menuButton=document.querySelector('.menu-button');
   const mobileMenu=document.querySelector('.mobile-menu');
-  const validRoutes=['home','how-it-works','roadmap','join','about'];
+  const validRoutes=['home','how-it-works','roadmap','join','about','careers'];
   const roles=['customers','restaurants','riders'];
-  const titles={home:'Deliverado','how-it-works':'How It Works | Deliverado',roadmap:'Roadmap | Deliverado',join:'Join the Network | Deliverado',about:'About | Deliverado'};
+  const titles={home:'Deliverado','how-it-works':'How It Works | Deliverado',roadmap:'Roadmap | Deliverado',join:'Join the Network | Deliverado',about:'About | Deliverado',careers:'Careers | Deliverado'};
 
   function parsedRoute(){
     const parts=(location.hash.replace(/^#\/?/,'')||'home').split('/').filter(Boolean);
@@ -538,6 +608,128 @@
   });
 
   render();
+})();
+</script>
+
+<script>
+(function(){
+  var sharedLocation='Remote within Kampala-Wakiso metropolitan area or Jinja';
+  var FORMSPREE_ENDPOINT='https://formspree.io/f/mzezrroo';
+  var ROLES=[
+    {slug:'backend-engineer',title:'Backend Engineer',type:'Full-time',pitch:'Build dependable services that power every order from checkout to delivery.',about:'We are looking for a Backend Engineer to design, build and operate the server side systems behind our customer, restaurant and rider products. You will work in a small, focused engineering team, take ownership of core services from design through to production, and help set the technical standards as the platform grows. This is a hands on role for an engineer who enjoys building dependable systems, solving real operational problems, and shipping work that customers and partners use every day.',sections:[
+      ['What you will do',['Design and build APIs. Develop secure, well documented and versioned APIs that support web and mobile client applications.','Model and manage data. Design database schemas, write migrations and ensure data is accurate, consistent and recoverable.','Build core platform services. Deliver features such as ordering, order tracking, dispatch, user accounts, notifications and reporting.','Integrate third party services. Connect and maintain integrations for payments, messaging, mapping and other external providers, including webhook handling and error recovery.','Protect reliability and security. Apply authentication, authorisation, validation, logging and monitoring so services stay secure and observable in production.','Write tested, maintainable code. Use automated tests, code review and clear documentation to keep quality high as the team moves quickly.','Support production operations. Investigate incidents, improve performance and help automate deployment and day to day operational tasks.','Collaborate across the team. Work closely with frontend engineers, product and operations colleagues to scope work, estimate effort and deliver in small, regular releases.']],
+      ['What we are looking for',['Proven experience building and operating production backend services, ideally in a consumer, marketplace, logistics or e-commerce product.','Strong TypeScript and Node.js skills in a modern environment.','Strong PostgreSQL or similar relational database knowledge, including schema design, indexing, transactions and query optimisation.','Solid understanding of REST APIs, idempotency, pagination, error handling and API security.','Experience with automated testing, Git, continuous integration and deployment practices.','Comfort deploying and supporting services in a cloud environment, with logging, alerting and performance troubleshooting.','Ability to take a problem from brief to shipped solution and explain technical trade offs clearly.']],
+      ['Nice to have',['Experience integrating payment providers or mobile money services.','Experience with real time updates, queues or event driven systems.','Experience with mapping, location or routing services.','Experience building multi tenant or role based business platforms.','Familiarity with the Uganda or East African technology and payments market.']],
+      ['What we offer',['A key role in a small team, with real ownership and visible impact from your first month.','Competitive salary, commensurate with experience, discussed during the interview process.','Remote working, with applicants required to be based in the Kampala-Wakiso metropolitan area or Jinja.','The chance to build products used daily by customers, restaurants and riders across the city.','A straightforward, respectful hiring process with timely feedback at each stage.']]
+    ]},
+    {slug:'frontend-engineer-consumer-apps',title:'Frontend Engineer, Consumer Apps',type:'Full-time',pitch:'Create fast, intuitive experiences for customers and riders on every screen.',about:'We are looking for a Frontend Engineer to join our Consumer Apps team. In this role, you will build and improve the web applications used by customers and riders every day. You will work closely with product, design, and backend engineering to deliver clean, responsive, and accessible user experiences that perform well on a wide range of devices and network conditions. This is a hands-on engineering role for someone who cares about product quality, performance, and the details that make an interface feel effortless to use.',sections:[
+      ['Key responsibilities',['Build, maintain, and improve customer-facing and rider-facing web applications using modern JavaScript and TypeScript frameworks.','Translate product requirements and design mockups into responsive, accessible, and production-ready user interfaces.','Work with backend engineers to integrate APIs and ensure smooth data flow across the application.','Optimise applications for speed, reliability, and usability on mobile devices and varying network conditions.','Write clean, well-tested, and maintainable code, and participate in code reviews.','Identify and fix bugs, performance bottlenecks, and usability issues.','Contribute to shared UI components and design system consistency across products.','Collaborate with product and design teams to plan, estimate, and deliver new features on schedule.','Follow best practices for security, privacy, and data handling in frontend development.']],
+      ['Required qualifications',["Bachelor's degree in Computer Science, Software Engineering, or a related field, or equivalent practical experience.",'3+ years of professional experience in frontend development.','Strong proficiency in JavaScript and TypeScript.','Solid experience with React and Next.js, or a comparable modern frontend framework.','Strong understanding of HTML, CSS, responsive design, and web accessibility standards.','Experience consuming REST APIs and handling asynchronous data in web applications.','Familiarity with Git and collaborative development workflows.','Experience writing unit and integration tests for frontend code.','Strong problem-solving skills, attention to detail and good communication.']],
+      ['Preferred qualifications',['Experience building Progressive Web Apps or mobile-first web applications.','Experience with maps, location-based features, or real-time updating interfaces.','Familiarity with Playwright or Cypress.','Experience working on e-commerce, food delivery, logistics, or marketplace products.','Understanding of performance optimisation for low-bandwidth environments.']],
+      ['What we offer',['Competitive salary, commensurate with experience.','Opportunity to build products used daily by customers, restaurants, and riders in Kampala.','A small, focused team with direct impact on product decisions.','Professional growth and learning opportunities.','Remote working, with applicants required to be based in the Kampala-Wakiso metropolitan area or Jinja.']]
+    ]},
+    {slug:'frontend-engineer-business-apps',title:'Frontend Engineer, Business Apps',type:'Full-time',pitch:'Build clear operational tools for restaurant partners and internal teams.',about:'We are hiring a Frontend Engineer to build the web applications our restaurant partners and internal teams use every day. You will work on the restaurant portal, where partners manage orders, menus, and their business, and on the internal operations dashboard, where our team supports customers, restaurants, and riders. This is a hands on role with real ownership. You will turn product ideas and designs into clean, fast, and dependable interfaces, and help shape how those tools grow. If you enjoy building data rich dashboards and solving practical problems for business users, we would like to hear from you.',sections:[
+      ['What you will do',['Build the restaurant portal: order management, menu and item management, business hours and availability, promotions, earnings and payout views, and business reports.','Build internal operations tools: order tracking and support views, customer, restaurant, and rider management, search and filtering, and activity history.','Create clear data displays with sorting, filtering, pagination, status indicators, timelines, charts, and summary cards.','Integrate REST APIs, handle loading, error, and empty states well, and display live updates as order statuses change.','Build responsive layouts for desktop and tablet, follow accessibility best practice, and keep interfaces fast and easy to scan.','Build forms with validation, helpful error messages, file and image uploads, and safe handling of edits.','Build role based views so users only see and change what they should.','Write tests, take part in code reviews, fix bugs, and help release features in small, steady steps.','Contribute to shared components, design patterns, and documentation.']],
+      ['What you will bring',['3 or more years of experience building web applications with modern frontend tools.','Strong skills in TypeScript, React, and Next.js, with solid HTML and CSS.','Experience building dashboards, admin panels, or other data heavy business applications.','Confidence working with REST APIs, asynchronous data, and real time updates such as web sockets or server sent events.','Experience with component libraries or design systems, and a good eye for layout, spacing, and consistency.','Comfort with forms, validation, tables, filters, and charts in a business setting.','Familiarity with Jest, Vitest, React Testing Library, Playwright, or Cypress.','Good use of Git and collaborative workflows such as pull requests and code review.','Clear communication in English and a practical, ownership-oriented mindset.']],
+      ['Nice to have',['Experience in e-commerce, food delivery, logistics, or hospitality technology.','Experience with Tailwind CSS, charting libraries, or map and location displays.','Experience building for users on slower networks or lower powered devices.','Experience with role based access, audit trails, or approval workflows in business software.','An interest in product and operations.']],
+      ['What we offer',['A key role in a small team, with real ownership of the tools our partners and staff use daily.','Work that ships quickly and is seen and used right away.','A competitive salary, shared openly during the interview process.','Remote working, with applicants required to be based in the Kampala-Wakiso metropolitan area or Jinja.','Room to grow your skills across product, design, and engineering.','A respectful and supportive team that values honesty, speed, and quality.']]
+    ]},
+    {slug:'qa-engineer',title:'QA Engineer',type:'Full-time',pitch:'Own product quality across the customer, rider, restaurant and operations experience.',about:'We are looking for a QA Engineer to own quality across all of our products: the customer ordering app, the rider app, the restaurant portal, and the operations dashboard. You will work closely with our engineers from the start of each feature, not just at the end, so problems are caught early and releases stay fast and dependable. This is a hands-on role in a small team, with real ownership of how we test and when we ship.',sections:[
+      ['What you will do',['Turn product requirements and designs into clear test plans, test cases, and acceptance checks for each release.','Test new features and fixes across web and mobile, covering happy paths, edge cases, and error states.','Build and maintain automated end-to-end tests for core flows, including browsing, ordering, payment, and delivery tracking.','Test on a range of Android devices and under slow or unstable network conditions.','Verify API behaviour, status codes, and data handling as part of feature testing.','Log clear, reproducible bug reports with steps, expected and actual results, screenshots, or short recordings.','Run regression checks before each release and confirm readiness, or flag clearly what is not.','Raise risks early and suggest improvements to flows that confuse users.']],
+      ['What you bring',['2 or more years in QA or software testing for web or mobile products.','Strong skill in writing test cases from requirements, user stories, and designs, including edge cases and negative tests.','Hands-on experience with Playwright or Cypress, or strong interest and basic scripting ability to grow into it.','Experience testing responsive web apps or PWAs on Android devices and different screen sizes.','Comfort using tools such as Postman to test endpoints and validate responses.','Strong attention to detail and follow-through.','Clear written English for bug reports and test documentation.','Comfort in a small team where you own your area, prioritise your work, and move quickly.']],
+      ['Nice to have',['Experience testing e-commerce, food delivery, marketplace, or payments products.','Experience testing under low bandwidth or intermittent connectivity.','Basic SQL for checking data as part of an investigation.','Familiarity with performance or accessibility testing.','Experience with test management tools and CI pipelines.']],
+      ['What we offer',['A small, focused team where your work is visible and your judgement matters.','Ownership of QA practice from day one, with room to shape tools and process.','Work on a product used by customers, restaurants, and riders in Kampala.','Competitive salary and remote working, with applicants required to be based in the Kampala-Wakiso metropolitan area or Jinja.']]
+    ]}
+  ];
+
+  var landing=document.getElementById('careers-landing'),
+      detail=document.getElementById('careers-detail'),
+      apply=document.getElementById('careers-apply'),
+      form=document.getElementById('careers-form'),
+      confirmBox=document.getElementById('careers-confirm'),
+      currentRole=null;
+
+  function metaText(role){return sharedLocation+'  •  '+role.type;}
+
+  function scrollTop(){var a=document.querySelector('[data-route="careers"]');if(a)a.scrollIntoView({block:'start'});window.scrollTo({top:0,behavior:'instant'});}
+
+  function showLanding(){currentRole=null;landing.hidden=false;detail.hidden=true;apply.hidden=true;scrollTop();}
+  function showDetail(role){
+    currentRole=role;landing.hidden=true;apply.hidden=true;detail.hidden=false;
+    document.getElementById('cd-title').textContent=role.title;
+    document.getElementById('cd-meta').textContent=metaText(role);
+    document.getElementById('cd-about').textContent=role.about;
+    document.getElementById('cd-sections').innerHTML=role.sections.map(function(s){
+      return '<div class="detail-section"><h3>'+s[0]+'</h3><ul>'+s[1].map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+    }).join('');
+    scrollTop();
+  }
+  function showApply(){
+    if(!currentRole)return;landing.hidden=true;detail.hidden=true;apply.hidden=false;
+    form.hidden=false;confirmBox.hidden=true;form.reset();
+    document.getElementById('ca-title').textContent='Apply: '+currentRole.title;
+    document.getElementById('ca-meta').textContent=metaText(currentRole);
+    scrollTop();
+    setTimeout(function(){var f=form.querySelector('input[name="name"]');if(f)f.focus();},250);
+  }
+
+  var grid=document.getElementById('careers-role-grid');
+  ROLES.forEach(function(role,i){
+    var card=document.createElement('article');card.className='role-card';
+    card.innerHTML='<div class="role-index">0'+(i+1)+' / OPEN ROLE</div><h3>'+role.title+'</h3><p class="detail-meta">'+metaText(role)+'</p><p class="pitch">'+role.pitch+'</p><button class="button secondary view-role" type="button">View role</button>';
+    card.querySelector('.view-role').addEventListener('click',function(){showDetail(role);});
+    grid.appendChild(card);
+  });
+
+  document.querySelectorAll('[data-careers-back]').forEach(function(b){b.addEventListener('click',showLanding);});
+  document.querySelectorAll('[data-careers-back-detail]').forEach(function(b){b.addEventListener('click',function(){if(currentRole)showDetail(currentRole);});});
+  document.getElementById('cd-apply').addEventListener('click',showApply);
+  window.addEventListener('hashchange',function(){
+    if((location.hash.replace(/^#\/?/,'')||'home').split('/')[0]==='careers')showLanding();
+  });
+
+  form.querySelectorAll('input,textarea').forEach(function(input){input.addEventListener('input',function(){var f=input.closest('.field');if(f)f.classList.remove('invalid');});});
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var valid=true;
+    form.querySelectorAll('[required]').forEach(function(input){
+      var field=input.closest('.field');
+      var ok=input.value.trim()!==''&&(input.type!=='email'||input.validity.valid)&&(input.type!=='url'||input.value.trim()===''||input.validity.valid);
+      if(field)field.classList.toggle('invalid',!ok);
+      if(!ok)valid=false;
+    });
+    var fileInput=form.querySelector('input[name="cv"]');
+    var file=fileInput.files[0];
+    if(file){
+      var okType=/\.(pdf|doc|docx)$/i.test(file.name);
+      var okSize=file.size<=10*1024*1024;
+      var field=fileInput.closest('.field');
+      if(field)field.classList.toggle('invalid',!(okType&&okSize));
+      if(!(okType&&okSize))valid=false;
+    }
+    if(!valid){var bad=form.querySelector('.invalid input,.invalid textarea');if(bad)bad.focus();return;}
+
+    var btn=form.querySelector('.apply-submit');
+    btn.disabled=true;var original=btn.textContent;btn.textContent='Sending...';
+    var note=document.getElementById('careers-note-text');
+
+    var fd=new FormData(form);
+    fd.append('form_type','job_application');
+    fd.append('role_applied_for',currentRole?currentRole.title:'');
+    fd.append('_subject','New job application: '+(currentRole?currentRole.title:'Deliverado'));
+    if(!file)fd.delete('cv');
+
+    fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:fd}).then(function(res){
+      if(!res.ok)throw new Error('status '+res.status);
+      form.hidden=true;confirmBox.hidden=false;scrollTop();
+      document.getElementById('careers-confirm-text').textContent='Thanks for applying for the '+currentRole.title+' role. We will review your application and reply to every applicant.';
+      btn.disabled=false;btn.textContent=original;
+    }).catch(function(){
+      btn.disabled=false;btn.textContent=original;
+      note.textContent='Something went wrong sending your application. Please check your connection and try again.';
+    });
+  });
 })();
 </script>
 </body>
