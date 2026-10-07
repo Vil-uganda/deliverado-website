@@ -661,6 +661,7 @@
     if(!currentRole)return;landing.hidden=true;detail.hidden=true;apply.hidden=false;
     document.getElementById('ca-title').textContent='Apply: '+currentRole.title;
     document.getElementById('ca-meta').textContent=metaText(currentRole);
+    document.getElementById('careers-apply-panel').classList.add('active');
     if(formLink&&FORM_URLS[currentRole.slug])formLink.href=FORM_URLS[currentRole.slug];
     scrollTop();
   }
