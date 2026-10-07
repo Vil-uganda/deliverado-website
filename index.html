@@ -492,22 +492,10 @@
         <div class="eyebrow">Apply</div>
         <h2 id="ca-title">Apply</h2>
         <p class="detail-meta" id="ca-meta"></p>
-        <form id="careers-form" class="form-shell" novalidate>
-          <div class="fields">
-            <div class="field"><label>Full name</label><input aria-label="Full name" name="name" autocomplete="name" required><div class="field-error">Please add your full name.</div></div>
-            <div class="field"><label>Email address</label><input aria-label="Email address" name="email" type="email" autocomplete="email" required><div class="field-error">Please add a valid email address.</div></div>
-            <div class="field"><label>Phone number</label><input aria-label="Phone number" name="phone" type="tel" autocomplete="tel" required><div class="field-error">Please add your phone number.</div></div>
-            <div class="field"><label>Current location</label><input aria-label="Current location" name="location" placeholder="e.g. Kampala" required><div class="field-error">Please add your current location.</div></div>
-            <div class="field"><label>LinkedIn or portfolio link</label><input aria-label="LinkedIn or portfolio link" name="link" type="url" placeholder="https://"></div>
-            
-            <div class="field"><label>Cover note</label><textarea aria-label="Cover note" name="cover_note" rows="4" placeholder="Tell us briefly why this role fits you."></textarea></div>
-          </div>
-          <div class="form-actions"><span></span><button class="button apply-submit" type="submit">Submit application</button></div>
-          <div class="form-note"><span class="status-dot"></span><span id="careers-note-text">Applications go directly to our hiring inbox. We reply to every applicant.</span></div>
-        </form>
-        <div id="careers-confirm" hidden>
-          <div class="form-panel"><div class="form-intro"><div class="eyebrow">Application received</div><h2>Thank you. Your application is on its way.</h2><p id="careers-confirm-text">We will review it and reply to every applicant.</p></div>
-          <p><button class="button secondary" type="button" data-careers-back>Back to open roles</button></p></div>
+        <div class="form-panel" id="careers-apply-panel">
+          <p>Our application form lives on Google Forms, where you can also upload your CV.</p>
+          <p><a class="button" id="ca-form-link" href="#" target="_blank" rel="noopener">Continue to application form <span class="arrow">→</span></a></p>
+          <div class="form-note"><span class="status-dot"></span><span>Applications go directly to our hiring team. We reply to every applicant.</span></div>
         </div>
       </div></section>
     </div>
@@ -614,7 +602,6 @@
 <script>
 (function(){
   var sharedLocation='Remote, Kampala-Wakiso metropolitan area';
-  var FORMSPREE_ENDPOINT='https://formspree.io/f/mzezrroo';
   var ROLES=[
     {slug:'backend-engineer',title:'Backend Engineer',type:'Full-time',pitch:'Build dependable services that power every order from checkout to delivery.',about:'We are looking for a Backend Engineer to design, build and operate the server side systems behind our customer, restaurant and rider products. You will work in a small, focused engineering team, take ownership of core services from design through to production, and help set the technical standards as the platform grows. This is a hands on role for an engineer who enjoys building dependable systems, solving real operational problems, and shipping work that customers and partners use every day.',sections:[
       ['What you will do',['Design and build APIs. Develop secure, well documented and versioned APIs that support web and mobile client applications.','Model and manage data. Design database schemas, write migrations and ensure data is accurate, consistent and recoverable.','Build core platform services. Deliver features such as ordering, order tracking, dispatch, user accounts, notifications and reporting.','Integrate third party services. Connect and maintain integrations for payments, messaging, mapping and other external providers, including webhook handling and error recovery.','Protect reliability and security. Apply authentication, authorisation, validation, logging and monitoring so services stay secure and observable in production.','Write tested, maintainable code. Use automated tests, code review and clear documentation to keep quality high as the team moves quickly.','Support production operations. Investigate incidents, improve performance and help automate deployment and day to day operational tasks.','Collaborate across the team. Work closely with frontend engineers, product and operations colleagues to scope work, estimate effort and deliver in small, regular releases.']],
@@ -645,9 +632,15 @@
   var landing=document.getElementById('careers-landing'),
       detail=document.getElementById('careers-detail'),
       apply=document.getElementById('careers-apply'),
-      form=document.getElementById('careers-form'),
-      confirmBox=document.getElementById('careers-confirm'),
+      formLink=document.getElementById('ca-form-link'),
       currentRole=null;
+
+  var FORM_URLS={
+    'backend-engineer':'https://docs.google.com/forms/d/e/1FAIpQLSdan-zHh6lpEo04fem3CumMn_PGkPQtCrU0ycR5UpztGybtFw/viewform',
+    'frontend-engineer-consumer-apps':'https://docs.google.com/forms/d/e/1FAIpQLSfndvdXDRMjzSWgdIXRGwbt-PokelD9UerbZGoggPkM9HZzBw/viewform',
+    'frontend-engineer-business-apps':'https://docs.google.com/forms/d/e/1FAIpQLScFIDzB4Ydty2-TB24YaMKpzLDIOgXaj2AXzPHHckieBsAXCw/viewform',
+    'qa-engineer':'https://docs.google.com/forms/d/e/1FAIpQLSdrw-TUpNqTjNP0LrW7-uaue950U-HqbSJ4yfjQqZDqwLb7GQ/viewform'
+  };
 
   function metaText(role){return sharedLocation+'  •  '+role.type;}
 
@@ -666,11 +659,10 @@
   }
   function showApply(){
     if(!currentRole)return;landing.hidden=true;detail.hidden=true;apply.hidden=false;
-    form.hidden=false;confirmBox.hidden=true;form.reset();
     document.getElementById('ca-title').textContent='Apply: '+currentRole.title;
     document.getElementById('ca-meta').textContent=metaText(currentRole);
+    if(formLink&&FORM_URLS[currentRole.slug])formLink.href=FORM_URLS[currentRole.slug];
     scrollTop();
-    setTimeout(function(){var f=form.querySelector('input[name="name"]');if(f)f.focus();},250);
   }
 
   var grid=document.getElementById('careers-role-grid');
@@ -688,36 +680,6 @@
     if((location.hash.replace(/^#\/?/,'')||'home').split('/')[0]==='careers')showLanding();
   });
 
-  form.querySelectorAll('input,textarea').forEach(function(input){input.addEventListener('input',function(){var f=input.closest('.field');if(f)f.classList.remove('invalid');});});
-
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var valid=true;
-    form.querySelectorAll('[required]').forEach(function(input){
-      var field=input.closest('.field');
-      var ok=input.value.trim()!==''&&(input.type!=='email'||input.validity.valid)&&(input.type!=='url'||input.value.trim()===''||input.validity.valid);
-      if(field)field.classList.toggle('invalid',!ok);
-      if(!ok)valid=false;
-    });
-    if(!valid){var bad=form.querySelector('.invalid input,.invalid textarea');if(bad)bad.focus();return;}
-
-    var btn=form.querySelector('.apply-submit');
-    btn.disabled=true;var original=btn.textContent;btn.textContent='Sending...';
-    var note=document.getElementById('careers-note-text');
-
-    var payload={form_type:'job_application',role_applied_for:currentRole?currentRole.title:'',_subject:'New job application: '+(currentRole?currentRole.title:'Deliverado')};
-    form.querySelectorAll('input[name],textarea[name]').forEach(function(i){payload[i.name]=i.value.trim();});
-
-    fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(res){
-      if(!res.ok)throw new Error('status '+res.status);
-      form.hidden=true;confirmBox.hidden=false;scrollTop();
-      document.getElementById('careers-confirm-text').textContent='Thanks for applying for the '+currentRole.title+' role. We will review your application and reply to every applicant.';
-      btn.disabled=false;btn.textContent=original;
-    }).catch(function(){
-      btn.disabled=false;btn.textContent=original;
-      note.textContent='Something went wrong sending your application. Please check your connection and try again.';
-    });
-  });
 })();
 </script>
 </body>
