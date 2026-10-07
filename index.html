@@ -485,20 +485,6 @@
         <p><button class="button" type="button" id="cd-apply">Apply for this role <span class="arrow">→</span></button></p>
       </div></section>
     </div>
-
-    <div id="careers-apply" hidden>
-      <section class="section"><div class="wrap">
-        <p><button class="back-link" type="button" data-careers-back-detail>← Back to role details</button></p>
-        <div class="eyebrow">Apply</div>
-        <h2 id="ca-title">Apply</h2>
-        <p class="detail-meta" id="ca-meta"></p>
-        <div class="form-panel" id="careers-apply-panel">
-          <p>Our application form lives on Google Forms, where you can also upload your CV.</p>
-          <p><a class="button" id="ca-form-link" href="#" target="_blank" rel="noopener">Continue to application form <span class="arrow">→</span></a></p>
-          <div class="form-note"><span class="status-dot"></span><span>Applications go directly to our hiring team. We reply to every applicant.</span></div>
-        </div>
-      </div></section>
-    </div>
   </article>
 </main>
 
@@ -631,8 +617,6 @@
 
   var landing=document.getElementById('careers-landing'),
       detail=document.getElementById('careers-detail'),
-      apply=document.getElementById('careers-apply'),
-      formLink=document.getElementById('ca-form-link'),
       currentRole=null;
 
   var FORM_URLS={
@@ -646,9 +630,9 @@
 
   function scrollTop(){var a=document.querySelector('[data-route="careers"]');if(a)a.scrollIntoView({block:'start'});window.scrollTo({top:0,behavior:'instant'});}
 
-  function showLanding(){currentRole=null;landing.hidden=false;detail.hidden=true;apply.hidden=true;scrollTop();}
+  function showLanding(){currentRole=null;landing.hidden=false;detail.hidden=true;scrollTop();}
   function showDetail(role){
-    currentRole=role;landing.hidden=true;apply.hidden=true;detail.hidden=false;
+    currentRole=role;landing.hidden=true;detail.hidden=false;
     document.getElementById('cd-title').textContent=role.title;
     document.getElementById('cd-meta').textContent=metaText(role);
     document.getElementById('cd-about').textContent=role.about;
@@ -657,14 +641,12 @@
     }).join('');
     scrollTop();
   }
-  function showApply(){
-    if(!currentRole)return;landing.hidden=true;detail.hidden=true;apply.hidden=false;
-    document.getElementById('ca-title').textContent='Apply: '+currentRole.title;
-    document.getElementById('ca-meta').textContent=metaText(currentRole);
-    document.getElementById('careers-apply-panel').classList.add('active');
-    if(formLink&&FORM_URLS[currentRole.slug])formLink.href=FORM_URLS[currentRole.slug];
-    scrollTop();
-  }
+  document.getElementById('cd-apply').addEventListener('click',function(){
+    if(!currentRole||!FORM_URLS[currentRole.slug])return;
+    var url=FORM_URLS[currentRole.slug],w=null;
+    try{w=window.open(url,'_blank','noopener');}catch(err){w=null;}
+    if(!w)window.location.href=url;
+  });
 
   var grid=document.getElementById('careers-role-grid');
   ROLES.forEach(function(role,i){
@@ -676,15 +658,6 @@
 
   document.querySelectorAll('[data-careers-back]').forEach(function(b){b.addEventListener('click',showLanding);});
   document.querySelectorAll('[data-careers-back-detail]').forEach(function(b){b.addEventListener('click',function(){if(currentRole)showDetail(currentRole);});});
-  document.getElementById('cd-apply').addEventListener('click',showApply);
-  formLink.addEventListener('click',function(e){
-    e.preventDefault();
-    var url=formLink.getAttribute('href');
-    if(!url||url==='#')return;
-    var w=null;
-    try{w=window.open(url,'_blank','noopener');}catch(err){w=null;}
-    if(!w)window.location.href=url;
-  });
   window.addEventListener('hashchange',function(){
     if((location.hash.replace(/^#\/?/,'')||'home').split('/')[0]==='careers')showLanding();
   });
